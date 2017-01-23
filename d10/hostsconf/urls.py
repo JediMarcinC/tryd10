@@ -1,7 +1,5 @@
 from django.conf.urls import url
 
-
-from shortener.views import kirr_redirect_view, KirrCBView
 from .views import wildcard_redirect
 
 urlpatterns = [
