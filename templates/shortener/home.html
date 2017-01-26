@@ -1,6 +1,6 @@
 <head>
   <meta charset="UTF-8">
-  <title>Home</title>
+  <title>{{ title }}</title>
   <style>
     body {
       width: 800px;
@@ -10,9 +10,10 @@
   </style>
 </head>
 <body>
-<h1>Kirr Home page</h1>
-<form method="POST" action=".">  <!-- . for url that is on -->
-  <input type="text" name='url' placeholder="Shorten your url hello"> {% csrf_token %}
+<h1>{{ title }}</h1>
+<form method="POST" action="."> {% csrf_token %} <!-- . for url that is on -->
+  <!--<input type="text" name='url' placeholder="Shorten your url hello"> -->
+  {{ form.as_p }}
   <input type="submit" value="Shorten">
 </form>
 

@@ -10,17 +10,29 @@ class HomeView(View):
     def get(self, request, *args, **kwargs):
         form = SubmitURLForm()
         print('rget:', request.GET)
-        return render(request, 'shortener/home.html', {})
+        context = {'form': form,
+                   'title': 'Home form',
+            }
+        return render(request, 'shortener/home.html', context)
 
     def post(self, request, *args, **kwargs):
-        # print('rpost:', request.POST)
-        # print('request.POST.get("url"):', request.POST.get('url'))
-        # print('request.POST["url"]:', request.POST["url"])
         form = SubmitURLForm(request.POST)
+        context = {'form': form,
+                   'title': 'Home form',
+                   }
+        template = 'shortener/home.html'
         if form.is_valid():
-            print(form.cleaned_data)
+            new_url = form.cleaned_data.get('url')
+            obj, created = KirrURL.objects.get_or_create(url=new_url)
+            context = {'object': obj,
+                       'created': created,
+                       }
+            if created:
+                template = 'shortener/success.html'
+            else:
+                template = 'shortener/already_exists.html'
 
-        return render(request, 'shortener/home.html', {})
+        return render(request, template, context)
 
 
 
